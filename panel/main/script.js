@@ -1,3 +1,37 @@
+// REGISTER USER
+{
+    const registerUser = document.getElementById("register-user")
+    const usernameInp = registerUser.querySelector("#username")
+    const passInp = registerUser.querySelector("#password")
+    const emailInp = registerUser.querySelector("#email")
+    const sendButton = registerUser.querySelector("#send")
+    const clearButton = registerUser.querySelector("#clear")
+    const request = registerUser.querySelector("#request")
+    const response = registerUser.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const req = {
+            username: usernameInp.value,
+            password: passInp.value,
+            email: emailInp.value
+        }
+
+        const res = await (await fetch("/api/registerUser", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: JSON.stringify(req)
+        })).json()
+
+        request.textContent = JSON.stringify(req)
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
 // GET USER
 {
     const getUser = document.getElementById("get-user")
@@ -58,40 +92,6 @@
         })).json()
 
         request.textContent = url
-        response.textContent = JSON.stringify(res)
-    })
-
-    clearButton.addEventListener("click", () => {
-        request.textContent = ""
-        response.textContent = ""
-    })
-}
-
-// REGISTER USER
-{
-    const registerUser = document.getElementById("register-user")
-    const usernameInp = registerUser.querySelector("#username")
-    const passInp = registerUser.querySelector("#password")
-    const emailInp = registerUser.querySelector("#email")
-    const sendButton = registerUser.querySelector("#send")
-    const clearButton = registerUser.querySelector("#clear")
-    const request = registerUser.querySelector("#request")
-    const response = registerUser.querySelector("#response")
-
-    sendButton.addEventListener("click", async () => {
-        const req = {
-            username: usernameInp.value,
-            password: passInp.value,
-            email: emailInp.value
-        }
-
-        const res = await (await fetch("/api/registerUser", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-            body: JSON.stringify(req)
-        })).json()
-
-        request.textContent = JSON.stringify(req)
         response.textContent = JSON.stringify(res)
     })
 

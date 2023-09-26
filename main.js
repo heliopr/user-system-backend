@@ -28,9 +28,17 @@ const f = async () => {
         app.use("/api", r)
     })
 
-    app.use(express.static(path.join(__dirname,"./panel/")))
-    app.use("/", (req, res) => {
-        res.sendFile(path.join(__dirname, "./panel/index.html"))
+    app.use("/panel", express.static(path.join(__dirname,"./panel/")))
+    app.get("/panel/:pg", (req, res) => {
+        if (!fs.existsSync(`./panel/${req.params.pg}/index.html`)) {
+            res.send("ERROR")
+        }
+        else {
+            res.sendFile(path.join(__dirname, `./panel/${req.params.pg}/index.html`))
+        }
+    })
+    app.get("/panel", (req, res) => {
+        res.sendFile(path.join(__dirname, "./panel/main/index.html"))
     })
 
     app.listen(PORT, () => {
