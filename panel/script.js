@@ -36,6 +36,37 @@
     })
 }
 
+// GET COOKIE
+{
+    const getCookie = document.getElementById("get-cookie")
+    const usernameInp = getCookie.querySelector("#username")
+    const passInp = getCookie.querySelector("#password")
+    const sendButton = getCookie.querySelector("#send")
+    const clearButton = getCookie.querySelector("#clear")
+    const request = getCookie.querySelector("#request")
+    const response = getCookie.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const username = usernameInp.value
+        const password = passInp.value
+        let url = `/api/getCookie/?username=${username}&password=${password}`
+
+
+        const res = await (await fetch(url, {
+            method: "GET",
+            headers: {'Accept': 'application/json'}
+        })).json()
+
+        request.textContent = url
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
 // REGISTER USER
 {
     const registerUser = document.getElementById("register-user")

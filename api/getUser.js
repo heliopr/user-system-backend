@@ -23,6 +23,7 @@ image (string, encoded image in base64 (probably)): the user's profile image
 
 ERROR CODES:
 1000 - One, and only one of the arguments must be defined
+1001 - Wrong param type
 1010 - Error trying to get user
 */
 router.get("/getUser", bodyParser.urlencoded({extended:true}), async (req, res) => {
