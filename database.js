@@ -92,8 +92,8 @@ database.close = async function() {
 database.setupDatabase = async function() {
     console.log("[DB] Setting up db...")
 
-    let e = await database.exec("PRAGMA foreign_keys = ON")
-    if (e) return e
+//    let e = await database.exec("PRAGMA foreign_keys = ON")
+//    if (e) return e
 
     for (const s in schemas) {
         e = await database.exec(schemas[s])

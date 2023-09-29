@@ -3,6 +3,8 @@ const fs = require("fs")
 const path = require("path")
 
 const database = require("./database")
+const userManager = require("./userManager")
+const friendRequests = require("./friendRequests")
 
 const app = express()
 const PORT = 1001
@@ -21,7 +23,7 @@ const f = async () => {
 
     e = await database.setupDatabase()
     if (e) await handleError(e)
-
+    
 
     fs.readdirSync("./api").forEach((f) => {
         const r = require("./api/"+f)

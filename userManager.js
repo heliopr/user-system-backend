@@ -49,5 +49,24 @@ userManager.getUser = function(column, value) {
     return database.get(`SELECT * FROM users WHERE ${column} = ?`, [value])
 }
 
+userManager.getAllFriends = async function(id) {
+    let [rows, e] = await database.all("SELECT * FROM friendships WHERE user1 = ? OR user2 = ?", [id, id])
+    if (e) return [null, e]
+
+    const friends = []
+    for (const row of rows) {
+        if (row.user1 != id) friends.push(row.user1)
+        else if (row.user2 != id) friends.push(row.user2)
+    }
+    return [friends, null]
+}
+
+userManager.areFriends = async function(user1, user2) {
+    let [row, e] = await database.get("SELECT COUNT(*) AS count FROM friendships WHERE (user1=? AND user2=?) OR (user1=? AND user2=?)", [user1, user2, user2, user1])
+    if (e) return [false, e]
+    if (!row  || row.count == undefined || row.count == null) return [false, null]
+
+    return [row.count>0, e]
+}
 
 module.exports = userManager
