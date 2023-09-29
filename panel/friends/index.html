@@ -55,8 +55,24 @@
         <br><br>
 
         <div id="get-pending-friend-requests">
-            <h1>Get Peding Friend Requests /api/getPendingFriendRequests</h1>
+            <h1>Get Pending Friend Requests /api/getPendingFriendRequests</h1>
             <p>id<br><input id="id"></p>
+            <p>cookie<br><input id="cookie"></p>
+            
+            <button id="send">Send</button>
+            <button id="clear">Clear</button>
+            <h2>REQUEST</h2>
+            <p id="request"></p>
+            <h2>RESPONSE</h2>
+            <p id="response"></p>
+        </div>
+
+        <br><br>
+
+        <div id="accept-friend-request">
+            <h1>Accept Friend Request /api/acceptFriendRequest</h1>
+            <p>id<br><input id="id"></p>
+            <p>sender<br><input id="sender"></p>
             <p>cookie<br><input id="cookie"></p>
             
             <button id="send">Send</button>

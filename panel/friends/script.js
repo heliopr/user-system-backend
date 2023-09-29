@@ -122,3 +122,37 @@
         response.textContent = ""
     })
 }
+
+// ACCEPT FRIEND REQUEST
+{
+    const acceptFriendRequest = document.getElementById("accept-friend-request")
+    const senderInp = acceptFriendRequest.querySelector("#sender")
+    const idInp = acceptFriendRequest.querySelector("#id")
+    const cookieInp = acceptFriendRequest.querySelector("#cookie")
+    const sendButton = acceptFriendRequest.querySelector("#send")
+    const clearButton = acceptFriendRequest.querySelector("#clear")
+    const request = acceptFriendRequest.querySelector("#request")
+    const response = acceptFriendRequest.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const sender = parseInt(senderInp.value)
+        const id = parseInt(idInp.value)
+        const cookie = cookieInp.value
+        
+        const req = JSON.stringify({sender: sender, id: id, cookie: cookie})
+
+        const res = await (await fetch("/api/acceptFriendRequest", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}

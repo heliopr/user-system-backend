@@ -38,6 +38,8 @@ ERROR CODES:
 
 1019 - Sender email is not confirmed
 1020 - Target email is not confirmed
+
+1021 - You can't send friend request to yourself
 */
 router.post("/sendFriendRequest", bodyParser.json(), async (req, res) => {
     const {cookie} = req.body
@@ -56,6 +58,11 @@ router.post("/sendFriendRequest", bodyParser.json(), async (req, res) => {
 
     if (typeof(cookie) != "string") {
         res.json({success:false, errorCode:1002, errorMessage:`Param 'cookie' must be a string (got '${typeof(cookie)}' instead)`})
+        return
+    }
+
+    if (sender == target) {
+        res.json({success:false, errorCode:1021, errorMessage:"You can't send friend requests to yourself"})
         return
     }
 

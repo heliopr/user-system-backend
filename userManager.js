@@ -64,7 +64,7 @@ userManager.getAllFriends = async function(id) {
 userManager.areFriends = async function(user1, user2) {
     let [row, e] = await database.get("SELECT COUNT(*) AS count FROM friendships WHERE (user1=? AND user2=?) OR (user1=? AND user2=?)", [user1, user2, user2, user1])
     if (e) return [false, e]
-    if (!row  || row.count == undefined || row.count == null) return [false, null]
+    if (!row  || row.count == undefined || row.count == null || isNaN(row.count)) return [false, null]
 
     return [row.count>0, e]
 }

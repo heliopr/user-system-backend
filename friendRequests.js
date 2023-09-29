@@ -10,6 +10,28 @@ friendRequests.exists = async function(user1, user2) {
     return [row.count>0, e]
 }
 
+friendRequests.existsExactRequest = async function(sender, target) {
+    const [row, e] = await database.get("SELECT COUNT(*) AS count FROM friend_requests WHERE sender=? AND target=?", [sender, target])
+    if (e) return [false, e]
+    if (!row || row.count == undefined || row.count == null || isNaN(row.count)) return [false, null]
+
+    return [row.count>0, e]
+}
+
+friendRequests.acceptRequest = async function(sender, target) {
+    {
+        let e = await database.run("DELETE FROM friend_requests WHERE sender=? AND target=?", [sender, target])
+        if (e) return e
+    }
+
+    {
+        let e = await database.run("INSERT INTO friendships VALUES (?, ?)", [sender, target])
+        if (e) return e
+    }
+
+    return null
+}
+
 friendRequests.getSentRequests = async function(sender) {
     const [rows, e] = await database.all("SELECT target FROM friend_requests WHERE sender=?", [sender])
     if (e) return [null, e]
