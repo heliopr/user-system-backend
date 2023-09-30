@@ -69,4 +69,8 @@ userManager.areFriends = async function(user1, user2) {
     return [row.count>0, e]
 }
 
+userManager.removeFriendship = function(user1, user2) {
+    return database.run("DELETE FROM friendships WHERE (user1=? AND user2=?) OR (user1=? AND user2=?)", [user1, user2, user2, user1])
+}
+
 module.exports = userManager

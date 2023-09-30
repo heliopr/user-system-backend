@@ -27,6 +27,40 @@
     })
 }
 
+// REMOVE FRIEND
+{
+    const removeFriend = document.getElementById("remove-friend")
+    const friendInp = removeFriend.querySelector("#friend")
+    const idInp = removeFriend.querySelector("#id")
+    const cookieInp = removeFriend.querySelector("#cookie")
+    const sendButton = removeFriend.querySelector("#send")
+    const clearButton = removeFriend.querySelector("#clear")
+    const request = removeFriend.querySelector("#request")
+    const response = removeFriend.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const friend = parseInt(friendInp.value)
+        const id = parseInt(idInp.value)
+        const cookie = cookieInp.value
+        
+        const req = JSON.stringify({friend: friend, id: id, cookie: cookie})
+
+        const res = await (await fetch("/api/removeFriend", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
 // SEND FRIEND REQUEST
 {
     const sendFriendRequest = document.getElementById("send-friend-request")
@@ -142,6 +176,40 @@
         const req = JSON.stringify({sender: sender, id: id, cookie: cookie})
 
         const res = await (await fetch("/api/acceptFriendRequest", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
+// DECLINE FRIEND REQUEST
+{
+    const declineFriendRequest = document.getElementById("decline-friend-request")
+    const senderInp = declineFriendRequest.querySelector("#sender")
+    const idInp = declineFriendRequest.querySelector("#id")
+    const cookieInp = declineFriendRequest.querySelector("#cookie")
+    const sendButton = declineFriendRequest.querySelector("#send")
+    const clearButton = declineFriendRequest.querySelector("#clear")
+    const request = declineFriendRequest.querySelector("#request")
+    const response = declineFriendRequest.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const sender = parseInt(senderInp.value)
+        const id = parseInt(idInp.value)
+        const cookie = cookieInp.value
+        
+        const req = JSON.stringify({sender: sender, id: id, cookie: cookie})
+
+        const res = await (await fetch("/api/declineFriendRequest", {
             method: "POST",
             headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
             body: req

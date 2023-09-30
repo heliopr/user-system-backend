@@ -32,6 +32,10 @@ friendRequests.acceptRequest = async function(sender, target) {
     return null
 }
 
+friendRequests.declineRequest = function(sender, target) {
+    return database.run("DELETE FROM friend_requests WHERE sender=? AND target=?", [sender, target])
+}
+
 friendRequests.getSentRequests = async function(sender) {
     const [rows, e] = await database.all("SELECT target FROM friend_requests WHERE sender=?", [sender])
     if (e) return [null, e]

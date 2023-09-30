@@ -25,15 +25,14 @@ ERROR CODES:
 
 1010 - Error searching for user
 1011 - User does not exist
+1012 - Email needs to be confirmed 
+1013 - Invalid cookie
 
-1012 - Email needs to be confirmed
-1013 - Error checking for request
-1014 - No request found
-1015 - Error accepting request
-
-1016 - Invalid cookie
+1014 - Error searching for friend request
+1015 - Request not found
+1016 - Error deleting the request
 */
-router.post("/acceptFriendRequest", bodyParser.json(), async (req, res) => {
+router.post("/declineFriendRequest", bodyParser.json(), async (req, res) => {
     const {cookie} = req.body
     let {sender, id} = req.body
     if (typeof(id) != "number") {
@@ -74,7 +73,7 @@ router.post("/acceptFriendRequest", bodyParser.json(), async (req, res) => {
     }
 
     if (cookie !== user.cookie) {
-        res.json({success:false, errorCode:1016, errorMessage:"Invalid cookie"})
+        res.json({success:false, errorCode:1013, errorMessage:"Invalid cookie"})
         return
     }
 
@@ -82,22 +81,19 @@ router.post("/acceptFriendRequest", bodyParser.json(), async (req, res) => {
     {
         let [exists, e] = await friendRequests.existsExactRequest(sender, id)
         if (e) {
-            res.json({success:false, errorCode:1013, errorMessage:"An error occurred when trying to check for this request"})
+            res.json({success:false, errorCode:1014, errorMessage:"An error occurred when trying to search for friend request"})
             return
         }
         else if (!exists) {
-            res.json({success:false, errorCode:1014, errorMessage:"This user has not sent you a friend request"})
+            res.json({success:false, errorCode:1015, errorMessage:"This user has not sent you a friend request"})
             return
         }
     }
 
-
-    {
-        let e = await friendRequests.acceptRequest(sender, id)
-        if (e) {
-            res.json({success:false, errorCode:1015, errorMessage:"An error occurred when accepting the request"})
-            return
-        }
+    let e = await friendRequests.declineRequest(sender, id)
+    if (e) {
+        res.json({success:false, errorCode:1016, errorMessage:"An error occurred when trying to delete the request"})
+        return
     }
 
     res.json({success:true})

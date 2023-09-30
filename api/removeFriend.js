@@ -9,7 +9,7 @@ const router = express.Router()
 /*
 REQUEST:
 id (number): your id
-sender (number): the sender's id
+friend (number): your friend's id
 cookie (string): your cookie
 
 RESPONSE:
@@ -20,33 +20,30 @@ errorMessage (string): undefined if success == true
 
 ERROR CODES:
 1000 - Invalid id type
-1001 - Invalid sender type
+1001 - Invalid friend type
 1002 - Invalid cookie type
 
 1010 - Error searching for user
 1011 - User does not exist
+1012 - Email needs to be confirmed 
+1013 - Invalid cookie
 
-1012 - Email needs to be confirmed
-1013 - Error checking for request
-1014 - No request found
-1015 - Error accepting request
-
-1016 - Invalid cookie
+1014 - Error checking if users are friends
+1015 - Users are not friends
+1016 - Error removing friendship
 */
-router.post("/acceptFriendRequest", bodyParser.json(), async (req, res) => {
+router.post("/removeFriend", bodyParser.json(), async (req, res) => {
     const {cookie} = req.body
-    let {sender, id} = req.body
+    let {friend, id} = req.body
     if (typeof(id) != "number") {
         res.json({success:false, errorCode:1000, errorMessage: `Param 'id' must be a number (got '${typeof(id)}' instead)`})
         return
     }
-    //id = parseInt(id)
 
-    if (typeof(sender) != "number") {
-        res.json({success:false, errorCode:1001, errorMessage: `Param 'sender' must be a number (got '${typeof(sender)}' instead)`})
+    if (typeof(friend) != "number") {
+        res.json({success:false, errorCode:1001, errorMessage: `Param 'friend' must be a number (got '${typeof(friend)}' instead)`})
         return
     }
-    //sender = parseInt(sender)
 
     if (typeof(cookie) != "string") {
         res.json({success:false, errorCode:1002, errorMessage:`Param 'cookie' must be a string (got '${typeof(cookie)}' instead)`})
@@ -74,30 +71,28 @@ router.post("/acceptFriendRequest", bodyParser.json(), async (req, res) => {
     }
 
     if (cookie !== user.cookie) {
-        res.json({success:false, errorCode:1016, errorMessage:"Invalid cookie"})
+        res.json({success:false, errorCode:1013, errorMessage:"Invalid cookie"})
         return
     }
 
-
+    
     {
-        let [exists, e] = await friendRequests.existsExactRequest(sender, id)
+        let [areFriends, e] = await userManager.areFriends(id, friend)
         if (e) {
-            res.json({success:false, errorCode:1013, errorMessage:"An error occurred when trying to check for this request"})
+            res.json({success:false, errorCode:1014, errorMessage:"An error occurred when checking if users are friends"})
             return
         }
-        else if (!exists) {
-            res.json({success:false, errorCode:1014, errorMessage:"This user has not sent you a friend request"})
+        else if (!areFriends) {
+            res.json({success:false, errorCode:1015, errorMessage:"You are not friends"})
             return
         }
     }
 
 
-    {
-        let e = await friendRequests.acceptRequest(sender, id)
-        if (e) {
-            res.json({success:false, errorCode:1015, errorMessage:"An error occurred when accepting the request"})
-            return
-        }
+    let e = await userManager.removeFriendship(id, friend)
+    if (e) {
+        res.json({success:false, errorCode:1016, errorMessage:"An error occurred when trying to remove friendship"})
+        return
     }
 
     res.json({success:true})
