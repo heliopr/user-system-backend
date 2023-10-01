@@ -65,7 +65,7 @@ router.get("/getUser", bodyParser.urlencoded({extended:true}), async (req, res) 
     
     if (user) {
         res.json({success: true, found: true,
-            id: user.id, username: user.username, description: user.description, emailConfirmed: user.email_confirmed, image: user.image
+            id: user.id, username: user.username, description: user.description, emailConfirmed: user.email_confirmed==1, image: user.image
         })
     }
     else {

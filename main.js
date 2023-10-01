@@ -47,8 +47,8 @@ const f = async () => {
         console.log(`Server is open. Port: ${PORT}`)
     })
 
-    process.on("exit", () => {
-        database.close()
+    process.on("exit", async () => {
+        await database.close()
         console.log(`Server is closed.`)
     })
 

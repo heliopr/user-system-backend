@@ -30,6 +30,9 @@ ERROR CODES:
 1013 - Invalid email
 1014 - New email must be different than your current one
 1015 - Error changing email
+
+1016 - Error checking if email is in use
+1017 - New email is already in use
 */
 router.post("/changeEmail", bodyParser.json(), async (req, res) => {
     const {id, cookie, newEmail} = req.body
@@ -77,6 +80,19 @@ router.post("/changeEmail", bodyParser.json(), async (req, res) => {
     if (newEmail === user.email) {
         res.json({success:false, errorCode:1014, errorMessage:"Your new email must be different than your current one"})
         return
+    }
+
+    
+    {
+        let [u, e] = await userManager.getUser("email", newEmail)
+        if (e) {
+            res.json({success:false, errorCode:1016, errorMessage:"An error occurred when trying to check if newEmail is in use"})
+            return
+        }
+        else if (u) {
+            res.json({success:false, errorCode:1017, errorMessage:"Email is already in use"})
+            return
+        }
     }
 
 

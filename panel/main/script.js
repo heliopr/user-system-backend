@@ -32,6 +32,72 @@
     })
 }
 
+// CHANGE EMAIL
+{
+    const changeEmail = document.getElementById("change-email")
+    const newEmailInp = changeEmail.querySelector("#newEmail")
+    const idInp = changeEmail.querySelector("#id")
+    const cookieInp = changeEmail.querySelector("#cookie")
+    const sendButton = changeEmail.querySelector("#send")
+    const clearButton = changeEmail.querySelector("#clear")
+    const request = changeEmail.querySelector("#request")
+    const response = changeEmail.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const req = JSON.stringify({
+            newEmail: newEmailInp.value,
+            cookie: cookieInp.value,
+            id: parseInt(idInp.value)
+        })
+
+        const res = await (await fetch("/api/changeEmail", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
+// CONFIRM EMAIL
+{
+    const confirmEmail = document.getElementById("confirm-email")
+    const emailInp = confirmEmail.querySelector("#email")
+    const codeInp = confirmEmail.querySelector("#code")
+    const sendButton = confirmEmail.querySelector("#send")
+    const clearButton = confirmEmail.querySelector("#clear")
+    const request = confirmEmail.querySelector("#request")
+    const response = confirmEmail.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const req = JSON.stringify({
+            email: emailInp.value,
+            code: codeInp.value
+        })
+
+        const res = await (await fetch("/api/confirmEmail", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
 // GET USER
 {
     const getUser = document.getElementById("get-user")

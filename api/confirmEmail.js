@@ -55,7 +55,7 @@ router.post("/confirmEmail", bodyParser.json(), async (req, res) => {
         }
         
         if (!u) {
-            res.json({success:false, errorCode:1012, errorMessage:"This email has never been registered"})
+            res.json({success:false, errorCode:1012, errorMessage:"Email not found"})
             return
         }
 
