@@ -36,6 +36,10 @@ emailConfirmations.newConfirmation = async function(email) {
     return [code, null]
 }
 
+emailConfirmations.deleteConfirmation = function(email) {
+    return database.run("DELETE FROM email_confirmations WHERE email=?", [email])
+}
+
 emailConfirmations.confirmEmail = async function(email) {
     let e = await database.run("DELETE FROM email_confirmations WHERE email = ?", [email])
     if (e) return e

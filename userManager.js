@@ -73,4 +73,8 @@ userManager.removeFriendship = function(user1, user2) {
     return database.run("DELETE FROM friendships WHERE (user1=? AND user2=?) OR (user1=? AND user2=?)", [user1, user2, user2, user1])
 }
 
+userManager.changeEmail = function(id, newEmail) {
+    return database.run("UPDATE users SET email=?, email_confirmed=0 WHERE id=?", [newEmail, id])
+}
+
 module.exports = userManager
