@@ -1,7 +1,7 @@
 {
-    "users": "CREATE TABLE IF NOT EXISTS users( id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL, cookie TEXT NOT NULL, email TEXT NOT NULL, email_confirmed INTEGER NOT NULL DEFAULT 0, description TEXT DEFAULT '', image BLOB );",
+    "users": "CREATE TABLE IF NOT EXISTS users( id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL, cookie TEXT NOT NULL, email TEXT NOT NULL, email_confirmed INTEGER NOT NULL DEFAULT 0, description TEXT DEFAULT '');",
     "email_confirmations": "CREATE TABLE IF NOT EXISTS email_confirmations( email TEXT, code TEXT NOT NULL );",
     "friendships": "CREATE TABLE IF NOT EXISTS friendships( user1 INTEGER NOT NULL, user2 INTEGER NOT NULL );",
     "friend_requests": "CREATE TABLE IF NOT EXISTS friend_requests( sender INTEGER NOT NULL, target INTEGER NOT NULL );",
-    "password_changes": "CREATE TABLE IF NOT EXISTS password_changes( id INTEGER, new_password TEXT NOT NULL, code TEXT NOT NULL );"
+    "password_changes": "CREATE TABLE IF NOT EXISTS password_changes( id INTEGER NOT NULL, new_password TEXT NOT NULL, code TEXT NOT NULL );"
 }

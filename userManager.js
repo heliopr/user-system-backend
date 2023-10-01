@@ -15,6 +15,10 @@ userManager.generateNewCookie = function() {
     return cookie
 }
 
+userManager.isValidDescription = function(description) {
+    return description.length <= 200
+}
+
 userManager.isValidEmail = function(email) {
     return email.match(/^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/g)
 }
@@ -75,6 +79,10 @@ userManager.removeFriendship = function(user1, user2) {
 
 userManager.changeEmail = function(id, newEmail) {
     return database.run("UPDATE users SET email=?, email_confirmed=0 WHERE id=?", [newEmail, id])
+}
+
+userManager.changeDescription = function(id, newDescription) {
+    return database.run("UPDATE users SET description=? WHERE id=?", [newDescription, id])
 }
 
 module.exports = userManager
