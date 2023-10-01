@@ -6,3 +6,4 @@ https://github.com/TownbyHelio/user-system-backend
 - [x] Confirm email, change email
 - [x] Friends
 - [ ] Password changes
+- [ ] Explanation
