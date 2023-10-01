@@ -85,4 +85,8 @@ userManager.changeDescription = function(id, newDescription) {
     return database.run("UPDATE users SET description=? WHERE id=?", [newDescription, id])
 }
 
+userManager.changePassword = function (id, newPassword) {
+    return database.run("UPDATE users SET password=? WHERE id=?", [newPassword, id])
+}
+
 module.exports = userManager

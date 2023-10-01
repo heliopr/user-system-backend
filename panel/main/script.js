@@ -98,6 +98,108 @@
     })
 }
 
+// CHANGE DESCRIPTION
+{
+    const changeDescription = document.getElementById("change-description")
+    const newDescriptionInp = changeDescription.querySelector("#newDescription")
+    const idInp = changeDescription.querySelector("#id")
+    const cookieInp = changeDescription.querySelector("#cookie")
+    const sendButton = changeDescription.querySelector("#send")
+    const clearButton = changeDescription.querySelector("#clear")
+    const request = changeDescription.querySelector("#request")
+    const response = changeDescription.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const req = JSON.stringify({
+            newDescription: newDescriptionInp.value,
+            cookie: cookieInp.value,
+            id: parseInt(idInp.value)
+        })
+
+        const res = await (await fetch("/api/changeDescription", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
+// REQUEST PASSWORD CHANGE
+{
+    const requestPasswordChange = document.getElementById("request-password-change")
+    const newPasswordInp = requestPasswordChange.querySelector("#newPassword")
+    const idInp = requestPasswordChange.querySelector("#id")
+    const cookieInp = requestPasswordChange.querySelector("#cookie")
+    const sendButton = requestPasswordChange.querySelector("#send")
+    const clearButton = requestPasswordChange.querySelector("#clear")
+    const request = requestPasswordChange.querySelector("#request")
+    const response = requestPasswordChange.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const req = JSON.stringify({
+            newPassword: newPasswordInp.value,
+            cookie: cookieInp.value,
+            id: parseInt(idInp.value)
+        })
+
+        const res = await (await fetch("/api/requestPasswordChange", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
+// CONFIRM PASSWORD CHANGE
+{
+    const confirmPasswordChange = document.getElementById("request-password-change")
+    const codeInp = confirmPasswordChange.querySelector("#code")
+    const idInp = confirmPasswordChange.querySelector("#id")
+    const cookieInp = confirmPasswordChange.querySelector("#cookie")
+    const sendButton = confirmPasswordChange.querySelector("#send")
+    const clearButton = confirmPasswordChange.querySelector("#clear")
+    const request = confirmPasswordChange.querySelector("#request")
+    const response = confirmPasswordChange.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const req = JSON.stringify({
+            code: codeInp.value,
+            cookie: cookieInp.value,
+            id: parseInt(idInp.value)
+        })
+
+        const res = await (await fetch("/api/confirmPasswordChange", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
 // GET USER
 {
     const getUser = document.getElementById("get-user")

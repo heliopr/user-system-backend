@@ -3,6 +3,7 @@ const bodyParser = require("body-parser")
 const requestErrorHandler = require("../util/requestErrorHandler")
 const userManager = require("../userManager")
 const emailConfirmations = require("../emailConfirmations")
+const passwordChanges = require("../passwordChanges")
 
 const router = express.Router()
 
@@ -95,6 +96,10 @@ router.post("/confirmEmail", bodyParser.json(), async (req, res) => {
     if (e) {
         res.json({success:false, errorCode:1014, errorMessage:"An error occurred in the database"})
         return
+    }
+
+    {
+        await passwordChanges.deleteRequest(id)
     }
 
     res.json({success:true})
