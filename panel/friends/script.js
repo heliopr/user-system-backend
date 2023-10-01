@@ -157,6 +157,40 @@
     })
 }
 
+// CANCEL FRIEND REQUEST
+{
+    const cancelFriendRequest = document.getElementById("cancel-friend-request")
+    const targetInp = cancelFriendRequest.querySelector("#target")
+    const idInp = cancelFriendRequest.querySelector("#id")
+    const cookieInp = cancelFriendRequest.querySelector("#cookie")
+    const sendButton = cancelFriendRequest.querySelector("#send")
+    const clearButton = cancelFriendRequest.querySelector("#clear")
+    const request = cancelFriendRequest.querySelector("#request")
+    const response = cancelFriendRequest.querySelector("#response")
+
+    sendButton.addEventListener("click", async () => {
+        const target = parseInt(targetInp.value)
+        const id = parseInt(idInp.value)
+        const cookie = cookieInp.value
+        
+        const req = JSON.stringify({target: target, id: id, cookie: cookie})
+
+        const res = await (await fetch("/api/cancelFriendRequest", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            body: req
+        })).json()
+
+        request.textContent = req
+        response.textContent = JSON.stringify(res)
+    })
+
+    clearButton.addEventListener("click", () => {
+        request.textContent = ""
+        response.textContent = ""
+    })
+}
+
 // ACCEPT FRIEND REQUEST
 {
     const acceptFriendRequest = document.getElementById("accept-friend-request")
