@@ -5,4 +5,4 @@ https://github.com/TownbyHelio/user-system-backend
 - [x] Change description
 - [x] Confirm email, change email
 - [x] Friends
-- [x] Password changes
+- [] Password changes
