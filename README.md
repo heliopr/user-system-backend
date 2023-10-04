@@ -27,6 +27,7 @@ It includes:
     3.1. The port is 1001
 
 `localhost:1001/panel` - Panel where you can send requests
+
 `localhost:1001/api/...` - API endpoints (for example: `localhost:1001/api/getUser`)
 
 4. The database is automatically created inside `db/` as `main.db` when you run the program, along with the schemas in `schemas.json`
