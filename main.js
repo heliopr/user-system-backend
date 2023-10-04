@@ -43,6 +43,10 @@ const f = async () => {
         res.sendFile(path.join(__dirname, "./panel/main/index.html"))
     })
 
+    app.get("/", (req, res) => {
+        res.send("<h1><a href=\"/panel\">panel</a></h1>")
+    })
+
     app.listen(PORT, () => {
         console.log(`Server is open. Port: ${PORT}`)
     })
