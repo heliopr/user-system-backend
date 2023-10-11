@@ -26,6 +26,7 @@ It includes:
 1. Clone the repository
 2. Run `npm install`
 3. Run `npm start`
+
     3.1. The port is 1001
 
 `localhost:1001/panel` - Panel where you can send requests
@@ -38,10 +39,20 @@ It includes:
 
 # Endpoints
 
+## Response (IMPORTANT)
+The response is always a json object containing a `success` boolean property (very self-describing). In case the code does not succeed, it will return an `errorCode` (number) and `errorMessage` (string), both describing the error. The possible error codes for each endpoint can be found below within their respective sections.
+
 ## GENERAL
 W.I.P.
 
 ### `GET /api/getUser`
+
+<details>
+    <summary>Click me</summary>
+
+    ### Teste
+</details>
+
 ### `POST /api/registerUser`
 ### `POST /api/changeEmail`
 ### `POST /api/confirmEmail`
