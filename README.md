@@ -48,10 +48,13 @@ W.I.P.
 ### `GET /api/getUser`
 
 <details>
-    <summary>Click me</summary>
-
-    ### Teste
+  <summary>Click me</summary>
+  
+  #### Description
+  #### Request
+  #### Response
 </details>
+
 
 ### `POST /api/registerUser`
 ### `POST /api/changeEmail`
