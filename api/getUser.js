@@ -19,7 +19,6 @@ id (number)
 username (string)
 description (string)
 emailConfirmed (boolean)
-image (string, encoded image in base64 (probably)): the user's profile image
 
 ERROR CODES:
 1000 - One, and only one of the arguments must be defined
@@ -65,7 +64,7 @@ router.get("/getUser", bodyParser.urlencoded({extended:true}), async (req, res) 
     
     if (user) {
         res.json({success: true, found: true,
-            id: user.id, username: user.username, description: user.description, emailConfirmed: user.email_confirmed==1, image: user.image
+            id: user.id, username: user.username, description: user.description, emailConfirmed: user.email_confirmed==1
         })
     }
     else {
